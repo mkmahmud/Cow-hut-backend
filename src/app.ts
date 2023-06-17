@@ -1,7 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import express, { Application, NextFunction, Request, Response } from 'express'
 const app: Application = express()
 import cors from 'cors'
 import errorHandler from './app/middlewares/globalErrorHandler'
+import routes from './app/routes'
 
 // Cors
 app.use(cors())
@@ -14,9 +16,12 @@ app.get('/', (req: Request, res: Response) => {
   res.send('server is runing')
 })
 
-app.get('/example', (req: Request, res: Response, next: NextFunction) => {
-  next('My error')
-})
+app.use('/api/v1', routes)
+
+// Test Route
+// app.get('/example', (req: Request, res: Response, next: NextFunction) => {
+//   next('My error')
+// })
 
 // Global Error Handeler
 app.use(errorHandler)
