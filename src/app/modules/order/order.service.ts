@@ -64,6 +64,12 @@ const createNewOrder = async (orderData: IOrder): Promise<IOrder> => {
   return allData
 }
 
+const getOrders = async () => {
+  const result = await Order.find()
+  return result
+}
+
 export const orderService = {
   createNewOrder,
+  getOrders,
 }

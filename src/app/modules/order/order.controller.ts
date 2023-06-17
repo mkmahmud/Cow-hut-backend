@@ -32,6 +32,21 @@ const createOrder = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const getOrders = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await orderService.getOrders()
+    res.status(200).json({
+      statusCode: 200,
+      success: true,
+      message: 'Orders Data Retived succesfully',
+      data: result,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const orderController = {
   createOrder,
+  getOrders,
 }
