@@ -9,9 +9,8 @@ const createOrder = async (req: Request, res: Response, next: NextFunction) => {
 
     // Get cow details
     const cowDetails = await Cow.findById(data.cow)
-    console.log(cowDetails)
+
     const buyerDetails = await User.findById(data.buyer)
-    console.log(buyerDetails)
 
     if (buyerDetails && cowDetails && buyerDetails.budget >= cowDetails.price) {
       const result = await orderService.createNewOrder(data)
