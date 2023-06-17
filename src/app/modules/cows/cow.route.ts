@@ -13,7 +13,6 @@ router.post('/', cowController.createCow)
 router.patch('/:id', cowController.updateSingelCow)
 
 // Delete User
-
 router.delete('/:id', cowController.deleteSingelCow)
 
 // Get All Cow
