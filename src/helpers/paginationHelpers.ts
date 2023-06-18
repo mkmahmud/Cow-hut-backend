@@ -1,19 +1,4 @@
-import { SortOrder } from 'mongoose'
-
-type IOptions = {
-  page?: number
-  limit?: number
-  sortBy?: string
-  sortOrder?: SortOrder
-}
-
-type IOptionsResult = {
-  page: number
-  limit: number
-  skip: number
-  sortBy: string
-  sortOrder: SortOrder
-}
+import { IOptions, IOptionsResult } from '../constants/pagination'
 
 const calculatePageination = (options: IOptions): IOptionsResult => {
   const page = Number(options.page || 1)
