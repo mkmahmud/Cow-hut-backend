@@ -4,6 +4,7 @@ const app: Application = express()
 import cors from 'cors'
 import errorHandler from './app/middlewares/globalErrorHandler'
 import routes from './app/routes'
+// import { MongoError } from 'mongodb'
 
 // Cors
 app.use(cors())
@@ -20,7 +21,10 @@ app.use('/api/v1', routes)
 
 // Test Route
 // app.get('/example', (req: Request, res: Response, next: NextFunction) => {
-//   next('My error')
+//   const duplicateError = new MongoError('Duplicate key error');
+//   duplicateError.code = 11000;
+
+//   throw duplicateError;
 // })
 
 // Global Error Handeler
