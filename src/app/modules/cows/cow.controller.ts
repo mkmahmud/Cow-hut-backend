@@ -45,17 +45,16 @@ type ICowFilter = {
 const pageinationProperty = ['page', 'limit', 'sortBy', 'sortOrder']
 const getAllCows = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const searchTerm = paginationPick(req.query, [
-      'searchTerm',
-      'minPrice',
-      'maxPrice',
-      'location',
-    ])
+    const searchTerm = paginationPick(req.query, ['searchTerm', 'location'])
+
+    const minAndMax = paginationPick(req.query, ['minPrice', 'maxPrice'])
+
     const paginationObject = paginationPick(req.query, pageinationProperty)
 
     const result = await cowService.getAllCows(
       searchTerm as ICowFilter,
-      paginationObject
+      paginationObject,
+      minAndMax
     )
 
     res.status(200).json({

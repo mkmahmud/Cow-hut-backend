@@ -1,4 +1,4 @@
-import { Model, Schema } from 'mongoose'
+import { Model, Schema, SortOrder } from 'mongoose'
 import { IUser } from '../user/user.interface'
 
 export type ICowLocation =
@@ -37,3 +37,24 @@ export type ICow = {
 }
 
 export type CowModel = Model<ICow>
+
+export type IPageOptions = {
+  page?: number
+  limit?: number
+  sortBy?: string
+  sortOrder?: SortOrder
+  minPrice?: number
+  maxPrice?: number
+  location?: string
+  searchTerm?: string
+}
+
+export type IGenericResponse<T> = {
+  meta: {
+    page: number
+    limit: number
+  }
+  data: T
+}
+
+export type ICowFilter = { searchTerm: string }

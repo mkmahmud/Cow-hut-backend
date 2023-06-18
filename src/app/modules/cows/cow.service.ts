@@ -1,5 +1,10 @@
 import { SortOrder } from 'mongoose'
-import { ICow } from './cow.interface'
+import {
+  ICow,
+  ICowFilter,
+  IGenericResponse,
+  IPageOptions,
+} from './cow.interface'
 import { Cow } from './cow.model'
 import { paginationHelpers } from '../../../helpers/paginationHelpers'
 
@@ -9,31 +14,11 @@ const createCow = async (cowData: ICow): Promise<ICow> => {
   return result
 }
 
-type IPageOptions = {
-  page?: number
-  limit?: number
-  sortBy?: string
-  sortOrder?: SortOrder
-  minPrice?: number
-  maxPrice?: number
-  location?: string
-  searchTerm?: string
-}
-
-type IGenericResponse<T> = {
-  meta: {
-    page: number
-    limit: number
-  }
-  data: T
-}
-
-type ICowFilter = { searchTerm: string }
-
 // Get All cows
 const getAllCows = async (
   filters: ICowFilter,
-  pageOptions: IPageOptions
+  pageOptions: IPageOptions,
+  minmax: any
 ): Promise<IGenericResponse<ICow[]>> => {
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePageination(pageOptions)
@@ -60,6 +45,14 @@ const getAllCows = async (
         [field]: value,
       })),
     })
+  }
+
+  if ((minmax as any)?.minPrice) {
+    andConditions.push({ price: { $gte: (minmax as any)?.minPrice } })
+  }
+
+  if ((minmax as any)?.maxPrice) {
+    andConditions.push({ price: { $lte: (minmax as any)?.maxPrice } })
   }
 
   const sortConditions: { [key: string]: SortOrder } = {}

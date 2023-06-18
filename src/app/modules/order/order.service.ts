@@ -4,6 +4,7 @@ import { Order } from './order.model'
 import { Cow } from '../cows/cow.model'
 import { User } from '../user/user.model'
 
+// creating order
 const createNewOrder = async (orderData: IOrder): Promise<IOrder> => {
   let allData = null
   const session = await mongoose.startSession()
@@ -74,6 +75,7 @@ const createNewOrder = async (orderData: IOrder): Promise<IOrder> => {
   return allData
 }
 
+// get all order
 const getOrders = async () => {
   const result = await Order.find()
   return result
