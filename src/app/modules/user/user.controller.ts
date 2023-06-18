@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { userService } from './user.service'
 import { StatusCodes } from 'http-status-codes'
+import sendResponse from '../../../shared/sendResponse'
 
 // Creating new User
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -9,7 +10,7 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
     const { ...user } = req.body
     const result = await userService.createUser(user)
 
-    res.status(StatusCodes.OK).json({
+    sendResponse(res, {
       statusCode: StatusCodes.OK,
       success: true,
       message: 'User created Successfully',
@@ -29,7 +30,8 @@ const getSingelUser = async (
   try {
     const id = req.params.id
     const result = await userService.getSingelUser(id)
-    res.status(StatusCodes.OK).json({
+
+    sendResponse(res, {
       statusCode: StatusCodes.OK,
       success: true,
       message: 'User retrieved successfully',
@@ -43,7 +45,8 @@ const getSingelUser = async (
 // Getting All Users Data
 const getAllUsers = async (req: Request, res: Response) => {
   const result = await userService.getAllUsers()
-  res.status(StatusCodes.OK).json({
+
+  sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
     message: 'Users retrieved successfully',
@@ -62,7 +65,7 @@ const updateSingelUser = async (
     const updatedData = req.body
 
     const result = await userService.updateSingelUser(id, updatedData)
-    res.status(StatusCodes.OK).json({
+    sendResponse(res, {
       statusCode: StatusCodes.OK,
       success: true,
       message: 'User updated  successfully',
@@ -84,7 +87,7 @@ const deleteSingelUser = async (
     const id = req.params.id
 
     const result = await userService.deleteSingelUser(id)
-    res.status(StatusCodes.OK).json({
+    sendResponse(res, {
       statusCode: StatusCodes.OK,
       success: true,
       message: 'User deleted successfully',

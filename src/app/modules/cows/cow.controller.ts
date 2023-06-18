@@ -3,6 +3,9 @@ import { cowService } from './cow.service'
 import { User } from '../user/user.model'
 import paginationPick from '../../../shared/paginationPick'
 import { StatusCodes } from 'http-status-codes'
+import sendResponse from '../../../shared/sendResponse'
+import { ICowFilter } from './cow.interface'
+import { pageinationProperty } from './cow.constants'
 
 // Creating cow
 const createCow = async (req: Request, res: Response, next: NextFunction) => {
@@ -16,17 +19,17 @@ const createCow = async (req: Request, res: Response, next: NextFunction) => {
     if (getUser?.role === 'seller') {
       const result = await cowService.createCow(cowdata)
 
-      res.status(StatusCodes.OK).json({
+      sendResponse(res, {
         statusCode: StatusCodes.OK,
         success: true,
         message: 'Cow created successfully',
         data: result,
       })
     } else {
-      res.status(StatusCodes.BAD_REQUEST).json({
+      sendResponse(res, {
         statusCode: StatusCodes.BAD_REQUEST,
         success: false,
-        message: 'Your are not seller So you can not create cow',
+        message: 'Your are not seller! So you can not create cow',
       })
     }
   } catch (error) {
@@ -36,28 +39,16 @@ const createCow = async (req: Request, res: Response, next: NextFunction) => {
 
 // Get All Cows
 
-type ICowFilter = {
-  searchTerm: string
-  minPrice: string
-  maxPrice: string
-  location: string
-}
-
-const pageinationProperty = ['page', 'limit', 'sortBy', 'sortOrder']
 const getAllCows = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const searchTerm = paginationPick(req.query, ['searchTerm', 'location'])
-
     const minAndMax = paginationPick(req.query, ['minPrice', 'maxPrice'])
-
     const paginationObject = paginationPick(req.query, pageinationProperty)
-
     const result = await cowService.getAllCows(
       searchTerm as ICowFilter,
       paginationObject,
       minAndMax
     )
-
     res.status(StatusCodes.OK).json({
       statusCode: StatusCodes.OK,
       success: true,
@@ -79,8 +70,7 @@ const getSingelCow = async (
   try {
     const id = req.params.id
     const result = await cowService.getSingelCow(id)
-
-    res.status(StatusCodes.OK).json({
+    sendResponse(res, {
       statusCode: StatusCodes.OK,
       success: true,
       message: 'Cow retrieved successfully',
@@ -100,9 +90,8 @@ const updateSingelCow = async (
   try {
     const id = req.params.id
     const updatedData = req.body
-
     const result = await cowService.updateSingelCow(id, updatedData)
-    res.status(StatusCodes.OK).json({
+    sendResponse(res, {
       statusCode: StatusCodes.OK,
       success: true,
       message: 'Cow updated  successfully',
@@ -121,9 +110,8 @@ const deleteSingelCow = async (
 ) => {
   try {
     const id = req.params.id
-
     const result = await cowService.deleteSingelCow(id)
-    res.status(StatusCodes.OK).json({
+    sendResponse(res, {
       statusCode: StatusCodes.OK,
       success: true,
       message: 'User deleted successfully',
