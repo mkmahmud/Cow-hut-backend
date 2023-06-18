@@ -28,7 +28,10 @@ const createNewOrder = async (orderData: IOrder): Promise<IOrder> => {
     const seller = await User.findById({
       _id: updateCow?.seller ?? null,
     }).session(session)
-    const updatedIncome = seller?.income ?? 0 + cowPrice
+
+    const sellerIncome = seller?.income ? seller.income : 0
+
+    const updatedIncome = sellerIncome + cowPrice
     await User.updateOne(
       { _id: updateCow?.seller },
       {
@@ -45,7 +48,8 @@ const createNewOrder = async (orderData: IOrder): Promise<IOrder> => {
     const buyer = await User.findById({ _id: orderData.buyer ?? null }).session(
       session
     )
-    const updatedBuyerIncome = buyer?.budget ?? 0 - cowPrice
+    const buyerBudget = buyer?.budget ? buyer.budget : cowPrice
+    const updatedBuyerIncome = buyerBudget - cowPrice
     await User.updateOne(
       { _id: orderData.buyer },
       {
