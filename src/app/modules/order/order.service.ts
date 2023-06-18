@@ -19,14 +19,16 @@ const createNewOrder = async (orderData: IOrder): Promise<IOrder> => {
     const updateCow = await Cow.findOneAndUpdate(
       { _id: orderData.cow },
       updateCowData,
-      { new: true }
+      { new: true, session }
     )
-    const cowPrice = updateCow?.price
+    const cowPrice = updateCow?.price ?? 0
 
     // update seller account income
 
-    const seller = await User.findById({ _id: updateCow?.seller })
-    const updatedIncome = seller?.income + cowPrice
+    const seller = await User.findById({
+      _id: updateCow?.seller ?? null,
+    }).session(session)
+    const updatedIncome = seller?.income ?? 0 + cowPrice
     await User.updateOne(
       { _id: updateCow?.seller },
       {
@@ -34,13 +36,16 @@ const createNewOrder = async (orderData: IOrder): Promise<IOrder> => {
       },
       {
         new: true,
+        session,
       }
     )
 
     // Update Buyer Account budget
 
-    const buyer = await User.findById({ _id: orderData.buyer })
-    const updatedBuyerIncome = buyer?.budget - cowPrice
+    const buyer = await User.findById({ _id: orderData.buyer ?? null }).session(
+      session
+    )
+    const updatedBuyerIncome = buyer?.budget ?? 0 - cowPrice
     await User.updateOne(
       { _id: orderData.buyer },
       {
@@ -48,6 +53,7 @@ const createNewOrder = async (orderData: IOrder): Promise<IOrder> => {
       },
       {
         new: true,
+        session,
       }
     )
 
