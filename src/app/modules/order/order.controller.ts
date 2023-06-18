@@ -3,6 +3,7 @@ import { orderService } from './order.service'
 import { Cow } from '../cows/cow.model'
 import { User } from '../user/user.model'
 import sendResponse from '../../../shared/sendResponse'
+import { StatusCodes } from 'http-status-codes'
 
 const createOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -17,14 +18,14 @@ const createOrder = async (req: Request, res: Response, next: NextFunction) => {
       const result = await orderService.createNewOrder(data)
 
       sendResponse(res, {
-        statusCode: 200,
+        statusCode: StatusCodes.OK,
         success: true,
         message: 'Order made successfully',
         data: result,
       })
     } else {
       sendResponse(res, {
-        statusCode: 404,
+        statusCode: StatusCodes.BAD_REQUEST,
         success: false,
         message: 'Your dont have enough money',
       })
@@ -39,7 +40,7 @@ const getOrders = async (req: Request, res: Response, next: NextFunction) => {
     const result = await orderService.getOrders()
 
     sendResponse(res, {
-      statusCode: 200,
+      statusCode: StatusCodes.OK,
       success: true,
       message: 'Orders Data Retived succesfully',
       data: result,

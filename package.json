@@ -14,7 +14,7 @@
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": "eslint --cache --fix",
     "src/**/*.{js,jsx,ts,tsx,css,scss,md}": "prettier --write --ignore-unknown"
-},
+  },
   "keywords": [
     "cow",
     "hut"
@@ -37,6 +37,7 @@
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
     "express": "^4.18.2",
+    "http-status-codes": "^2.2.0",
     "mongoose": "^7.3.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8"

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { cowService } from './cow.service'
 import { User } from '../user/user.model'
 import paginationPick from '../../../shared/paginationPick'
+import { StatusCodes } from 'http-status-codes'
 
 // Creating cow
 const createCow = async (req: Request, res: Response, next: NextFunction) => {
@@ -15,15 +16,15 @@ const createCow = async (req: Request, res: Response, next: NextFunction) => {
     if (getUser?.role === 'seller') {
       const result = await cowService.createCow(cowdata)
 
-      res.status(200).json({
-        statusCode: 200,
+      res.status(StatusCodes.OK).json({
+        statusCode: StatusCodes.OK,
         success: true,
         message: 'Cow created successfully',
         data: result,
       })
     } else {
-      res.status(400).json({
-        statusCode: 400,
+      res.status(StatusCodes.BAD_REQUEST).json({
+        statusCode: StatusCodes.BAD_REQUEST,
         success: false,
         message: 'Your are not seller So you can not create cow',
       })
@@ -57,8 +58,8 @@ const getAllCows = async (req: Request, res: Response, next: NextFunction) => {
       minAndMax
     )
 
-    res.status(200).json({
-      statusCode: 200,
+    res.status(StatusCodes.OK).json({
+      statusCode: StatusCodes.OK,
       success: true,
       message: 'Cows retrieved  successfully',
       meta: result.meta,
@@ -79,8 +80,8 @@ const getSingelCow = async (
     const id = req.params.id
     const result = await cowService.getSingelCow(id)
 
-    res.status(200).json({
-      statusCode: 200,
+    res.status(StatusCodes.OK).json({
+      statusCode: StatusCodes.OK,
       success: true,
       message: 'Cow retrieved successfully',
       data: result,
@@ -101,8 +102,8 @@ const updateSingelCow = async (
     const updatedData = req.body
 
     const result = await cowService.updateSingelCow(id, updatedData)
-    res.status(200).json({
-      statusCode: 200,
+    res.status(StatusCodes.OK).json({
+      statusCode: StatusCodes.OK,
       success: true,
       message: 'Cow updated  successfully',
       data: result,
@@ -122,8 +123,8 @@ const deleteSingelCow = async (
     const id = req.params.id
 
     const result = await cowService.deleteSingelCow(id)
-    res.status(200).json({
-      statusCode: 200,
+    res.status(StatusCodes.OK).json({
+      statusCode: StatusCodes.OK,
       success: true,
       message: 'User deleted successfully',
       data: result,
