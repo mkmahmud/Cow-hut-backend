@@ -68,23 +68,3 @@
 * Creating new order **[POST]** : https://digital-cow-hut-backend-mahmudulmk4-gmailcom.vercel.app/api/v1/orders
 * Get order **[GET]**: https://digital-cow-hut-backend-mahmudulmk4-gmailcom.vercel.app/api/v1/orders
 
-
-## DevDependencies
-
-- **@types/cors** (^2.8.13): TypeScript definitions for the 'cors' library.
-- **@types/express** (^4.17.17): TypeScript definitions for the 'express' library.
-- **husky** (^8.0.3): Git hooks made easy.
-- **lint-staged** (^13.2.2): Run linters on git staged files.
-- **ts-node-dev** (^2.0.0): TypeScript fast-reloading development server.
-- **typescript** (^5.1.3): TypeScript programming language.
-- **@typescript-eslint/eslint-plugin** (^5.59.11): ESLint plugin for TypeScript.
-- **@typescript-eslint/parser** (^5.59.11): TypeScript parser for ESLint.
-- **cors** (^2.8.5): Middleware for enabling Cross-Origin Resource Sharing (CORS) in Express.
-- **dotenv** (^16.2.0): Loads environment variables from a .env file into process.env.
-- **eslint** (^8.42.0): Pluggable JavaScript linter.
-- **eslint-config-prettier** (^8.8.0): Turns off ESLint rules that conflict with Prettier.
-- **express** (^4.18.2): Fast, unopinionated, minimalist web framework for Node.js.
-- **http-status-codes** (^2.2.0): Constants for HTTP status codes.
-- **mongoose** (^7.3.0): MongoDB object modeling tool for Node.js.
-- **nodemon** (^2.0.22): Monitor for changes in your Node.js application and automatically restart it.
-- **prettier** (^2.8.8): Opinionated code formatter.
